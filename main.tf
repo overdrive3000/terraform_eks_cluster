@@ -86,6 +86,11 @@ resource "aws_iam_role_policy_attachment" "eks-node-AmazonEC2ContainerRegistryRe
   role       = "${aws_iam_role.eks-node.name}"
 }
 
+resource "aws_iam_role_policy_attachment" "eks-node-CloudWatchLogsFullAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+  role       = "${aws_iam_role.eks-node.name}"
+}
+
 resource "aws_iam_instance_profile" "eks-node" {
   name = "${var.cluster_name}-node"
   role = "${aws_iam_role.eks-node.name}"
