@@ -67,6 +67,25 @@ resource "aws_iam_policy" "kiam_policy" {
 EOF
 }
 
+resource "aws_iam_policy" "cni_helper" {
+  name = "cni_helper"
+  path = "/"
+  description = "IAM Policy for cni-metric-helper"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "cloudwatch:PutMetricData",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "eks-node-KiamPolicy" {
   policy_arn = "${aws_iam_policy.kiam_policy.arn}"
   role       = "${aws_iam_role.eks-node.name}"
