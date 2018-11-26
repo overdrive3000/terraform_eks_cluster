@@ -68,8 +68,8 @@ EOF
 }
 
 resource "aws_iam_policy" "cni_helper" {
-  name = "cni_helper"
-  path = "/"
+  name        = "cni_helper"
+  path        = "/"
   description = "IAM Policy for cni-metric-helper"
 
   policy = <<EOF
@@ -86,10 +86,16 @@ resource "aws_iam_policy" "cni_helper" {
 EOF
 }
 
+resource "aws_iam_role_policy_attachment" "eks-node-CniHelper" {
+  policy_arn = "${aws_iam_policy.cni_helper.arn}"
+  role       = "${aws_iam_role.eks-node.name}"
+}
+
 resource "aws_iam_role_policy_attachment" "eks-node-KiamPolicy" {
   policy_arn = "${aws_iam_policy.kiam_policy.arn}"
   role       = "${aws_iam_role.eks-node.name}"
 }
+
 resource "aws_iam_role_policy_attachment" "eks-node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = "${aws_iam_role.eks-node.name}"
