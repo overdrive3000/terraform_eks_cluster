@@ -78,7 +78,10 @@ resource "aws_iam_policy" "cni_helper" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "cloudwatch:PutMetricData",
+      "Action": [
+        "cloudwatch:PutMetricData",
+        "ec2:DescribeTags"
+      ],
       "Resource": "*"
     }
   ]
